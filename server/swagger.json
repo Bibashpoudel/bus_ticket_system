@@ -1,0 +1,1203 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Mengedegna Ticket API",
+    "description": "",
+    "version": "0.1.9"
+  },
+  "paths": {
+    "/api/v1/user/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User sign up",
+        "parameters": [
+          {
+            "in": "query",
+            "type": "string",
+            "name": "token",
+            "description": "captcha response key",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/signUp"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/user/validateOtp": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Validate sign up OTP",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/otp"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/user/login": {
+      "post": {
+        "summary": "user sign in",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/signIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/user/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "logout user",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/vehicle/add": {
+      "post": {
+        "tags": [
+          "Bus"
+        ],
+        "summary": "post vehicle details",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/vehicleDetails"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/vehicle/findVehicle":{
+      "get": {
+        "tags": [
+          "Bus"
+        ],
+        "summary": "Find vehicle based on locaton and date",
+        "parameters": [
+          {
+            "in": "query",
+            "type": "string",
+            "name": "to",
+            "description": "to location",
+            "required": false
+          },
+          {
+            "in": "query",
+            "type": "string",
+            "name": "from",
+            "description": "from location",
+            "required": false
+          },
+          {
+            "in": "query",
+            "type": "string",
+            "name": "date",
+            "description": "YYYY-MM-DD",
+            "required": false
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/vehicle/getList":{
+      "get": {
+        "tags": [
+          "Bus"
+        ],
+        "summary": "Find vehicle based on title, price range and class type ",
+        "parameters": [
+          {
+            "in": "query",
+            "type": "string",
+            "name": "min_price",
+            "description": "min_price",
+            "required": false
+          },
+          {
+            "in": "query",
+            "type": "string",
+            "name": "max_price",
+            "description": "max_price",
+            "required": false
+          },
+          {
+            "in": "query",
+            "type": "string",
+            "name": "title",
+            "description": "bus title",
+            "required": false
+          },
+          {
+            "in": "query",
+            "type": "string",
+            "name": "class_type",
+            "description": "bus aminites and class type",
+            "required": false
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/vehicle/getDetails/{vehicle_id}":{
+      "get": {
+        "tags": [
+          "Bus"
+        ],
+        "summary": "Find vehicle based on locaton and date",
+        "parameters": [
+          {
+            "in": "path",
+            "type": "string",
+            "name": "vehicle_id",
+            "description": "vehicle_id"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/vehicle/location/startPoint":{
+      "get": {
+        "tags": [
+          "Bus"
+        ],
+        "summary": "List of start location",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/vehicle/location/endPoint":{
+      "get": {
+        "tags": [
+          "Bus"
+        ],
+        "summary": "List of start location",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/vehicle/class_type/list":{
+      "get": {
+        "tags": [
+          "Bus"
+        ],
+        "summary": "List of class type",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/vehicle/title/list":{
+      "get": {
+        "tags": [
+          "Bus"
+        ],
+        "summary": "List of title",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/review/addReview/{vehicle_id}":{
+      "post": {
+        "tags": [
+          "Bus"
+        ],
+        "summary": "Create review",
+        "parameters": [
+          {
+            "in": "path",
+            "type": "string",
+            "name": "vehicle_id",
+            "description": "vehicle_id"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/review"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/user/profileDetails/{user_id}":{
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "User profile details",
+        "parameters": [
+          {
+            "in": "path",
+            "type": "string",
+            "name": "user_id",
+            "description": "user_id"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/userList":{
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Admin> GET: List of users",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/user/updateProfile":{
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update profile",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/updateProfile"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/user/forgotPassword/verifyEmail":{
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Forgot Password > verify email",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/clientAuth"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/verifyEmail"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/user/forgotPassword/newPassword":{
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Change password > Create new password",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/clientAuth"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/changePassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/vehicle/seatBooking/{vehicle_id}":{
+      "post": {
+        "tags": [
+          "Booking"
+        ],
+        "summary": "Create booking",
+        "parameters": [
+          {
+            "in": "query",
+            "type": "string",
+            "name": "vehicle_id",
+            "description": "vehicle id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/booking"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/discount/discountCode":{
+      "post": {
+        "tags": [
+          "Discount"
+        ],
+        "summary": "Create discount code",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/discountCode"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/discount/getList":{
+      "get": {
+        "tags": [
+          "Discount"
+        ],
+        "summary": "Get discount code list",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/discount/validateCode":{
+      "post": {
+        "tags": [
+          "Discount"
+        ],
+        "summary": "Validate discount code",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/createSupport":{
+      "post": {
+        "tags": [
+          "Support"
+        ],
+        "summary": "Create support details",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/support"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/getSupport":{
+      "get": {
+        "tags": [
+          "Support"
+        ],
+        "summary": "Get support details list",
+        "security": [
+          {
+            "bearerAuth": {
+              "$ref": "#/components/securitySchema/bearerAuth"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successfully executed"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Request not found"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "signUp": {
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "description": "required for worker role"
+          },
+          "lastname": {
+            "type": "string",
+            "description": "required for worker role"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "phone":{
+            "type": "string"
+          },
+          "calling_code": {
+            "type": "string"
+          },
+          "fcm_token": {
+            "type": "string"
+          },
+          "bus_management": {
+            "type": "boolean"
+          },
+          "schedule_management": {
+            "type": "boolean"
+          },
+          "booking_management": {
+            "type": "boolean"
+          },
+          "finance_management": {
+            "type": "boolean"
+          },
+          "reporting_management": {
+            "type": "boolean"
+          },
+          "support_management": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "role",
+          "calling_code"
+        ]
+      },
+      "signIn": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "otp": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string"
+          },
+          "otp": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "vehicleDetails": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          },
+          "class_type": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "seat_plan": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "pickup": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "date",
+          "time",
+          "class_type",
+          "to",
+          "from",
+          "seat_plan",
+          "price",
+          "pickup"
+        ]
+      },
+      "review":{
+        "type": "object",
+        "properties": {
+          "punctuality": {
+            "type": "string",
+            "description": "punctuality"
+          },
+          "service": {
+            "type": "string",
+            "description": "service"
+          },
+          "sanitation": {
+            "type": "string",
+            "description": "sanitation"
+          },
+          "comfort": {
+            "type": "string",
+            "description": "comfort"
+          },
+          "comment": {
+            "type": "string",
+            "description": "comfort"
+          }
+        }
+      },
+      "updateProfile": {
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "description": "required for worker role"
+          },
+          "lastname": {
+            "type": "string",
+            "description": "required for worker role"
+          },
+          "phone":{
+            "type": "string"
+          },
+          "calling_code": {
+            "type": "string"
+          }
+        },
+      "required": [
+        "firstname",
+        "lastname",
+        "phone",
+        "calling_code"
+      ]
+      },
+      "verifyEmail": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "email"
+          }
+        },
+      "required": [
+        "email"
+      ]
+      },
+      "changePassword": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "description": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "email"
+          }
+        },
+      "required": [
+        "user_id",
+        "password"
+      ]
+      },
+      "booking":{
+          "type": "object",
+          "properties": {
+            "booked_seat": {
+              "type": "string",
+              "description": "seat id"
+            },
+            "seat_position": {
+              "type": "string",
+              "description": "left, right, cabin, back"
+            },
+            "unique_id":{
+              "type": "string",
+              "description": "device unique id"
+            }
+        },
+        "required": [
+          "booked_seat",
+          "seat_position",
+          "unique_id"
+        ]
+      
+      },
+      "discountCode":{
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Discount code"
+          },
+          "code_type": {
+            "type": "string",
+            "description": "Type of code"
+          },
+          "amount":{
+            "type": "string",
+            "description": "Discount amount"
+          },
+          "percent":{
+            "type": "string",
+            "description": "Discount percent"
+          },
+          "reach":{
+            "type": "string",
+            "description": "No. of discount code usage"
+          },
+          "start_date":{
+            "type": "string",
+            "description": "start of discount code validation"
+          },
+          "end_date":{
+            "type": "string",
+            "description": "end of discount code validation"
+          }
+      },
+      "required": [
+        "code",
+        "code_type",
+        "reach",
+        "start_date",
+        "end_date"
+      ]
+    
+      },
+      "support":{
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Discount code"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Type of code"
+          },
+          "calling_code":{
+            "type": "string",
+            "description": "Discount amount"
+          }
+      },
+      "required": [
+        "email",
+        "phone",
+        "calling_code"
+      ]
+      }
+    },
+    "securitySchema": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "clientAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Access token is missing or invalid"
+      }
+    }
+  }
+}

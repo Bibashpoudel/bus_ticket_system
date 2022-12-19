@@ -1,0 +1,15 @@
+{
+  "short_name": "Dashboard",
+  "name": "Admin Dashboard",
+  "icons": [
+    {
+      "src": "MDLogo.jpeg",
+      "type": "image/jpeg",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
